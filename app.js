@@ -5,7 +5,7 @@ const ul = document.querySelector('ul');
 const letters = document.getElementsByClassName('letter');
 const scoreboard = document.getElementById('scoreboard');
 const tries = document.getElementsByClassName('tries');
-const missed = 0;
+var missed = 0;
 
 const phrases = [
 	'We are the Champions',
@@ -54,23 +54,29 @@ function checkLetter(letterkeys) {
 	        letters[i].classList.add('show');
 	        check = true;
 	    }
+
+	}
+	if (check !== true) {
+		missed += 1;
 	}
 	return check;
 }
 
+function checkwin(){
+
+}
+
 qwerty.addEventListener('click', (e) => {
-	console.log(e.target);
+
 	let letterFound = checkLetter(e.target);
-	console.log(letterFound);
-	for (i = 0; i < letterFound.length; i += 1 ) {
+///this is not setting the buttons to disabled. 
+	for (i = 0; i < e.target.length; i += 1 ) {
 		if (e.target.tagName === 'BUTTON'){
 		 	e.target.classList.add('chosen');
 			e.target.disabled = true;
 		}
+
 	 }
+
+	console.log(missed);
 });
-
-
-function checkwin(){
-
-}
