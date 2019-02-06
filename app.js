@@ -50,7 +50,7 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 console.log(addPhraseToDisplay(phraseArray));
 addPhraseToDisplay(phraseArray);
 
-const letters = document.getElementsByClassName('letter');
+
 function checkLetter(letterkeys) {
 	let check = false;
 
@@ -58,9 +58,7 @@ function checkLetter(letterkeys) {
 	    if (letterkeys.textContent === letters[i].textContent.toUpperCase()) {
 	        letters[i].classList.add('show');
 	        check = true;
-	    } else {
-			check = 'null';
-		}
+	    }
 	}
 	return check; //This function is not returning anything but null. why?
 }
