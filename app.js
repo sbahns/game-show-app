@@ -8,7 +8,7 @@ const tries = document.getElementsByClassName('tries');
 const missed = 0;
 
 const phrases = [
-	'Ayyyyyyy',
+	'We are the Champions',
 	'Wassup',
 	'Another one bites the dust',
 	'Is this the real life',
@@ -43,31 +43,26 @@ function addPhraseToDisplay(arr){
 	  return arr;
 }
 
-
-//console.log(getRandomPhraseAsArray(phrases));
 const phraseArray = getRandomPhraseAsArray(phrases);
-//These are not displaying the same phrases in the console. Does this matter or does it only matter what is in the display function?
-console.log(addPhraseToDisplay(phraseArray));
-addPhraseToDisplay(phraseArray);
 
+addPhraseToDisplay(phraseArray);
 
 function checkLetter(letterkeys) {
 	let check = false;
-
 	for (var i = 0; i < letters.length; i++) {
-	    if (letterkeys.textContent === letters[i].textContent.toUpperCase()) {
+	    if (letterkeys.textContent === letters[i].textContent.toLowerCase()) {
 	        letters[i].classList.add('show');
 	        check = true;
 	    }
 	}
-	return check; //This function is not returning anything but null. why?
+	return check;
 }
 
 qwerty.addEventListener('click', (e) => {
 	console.log(e.target);
-	let letterFound = checkLetter(e);
+	let letterFound = checkLetter(e.target);
 	console.log(letterFound);
-	for (i = 0; i < letterFound.length; i+= 1 ) {
+	for (i = 0; i < letterFound.length; i += 1 ) {
 		if (e.target.tagName === 'BUTTON'){
 		 	e.target.classList.add('chosen');
 			e.target.disabled = true;
