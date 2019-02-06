@@ -1,7 +1,10 @@
 const overlay = document.getElementById('overlay');
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
+const ul = document.querySelector('ul');
 const letters = document.getElementsByClassName('letter');
+const scoreboard = document.getElementById('scoreboard');
+const tries = document.getElementsByClassName('tries');
 const missed = 0;
 
 const phrases = [
@@ -30,12 +33,12 @@ function addPhraseToDisplay(arr){
 	  for(var i = 0; i < arr.length; i += 1) {
 	    let li = document.createElement('li');
 			li.textContent = arr[i];
-			phrase.appendChild(li);
 			if(arr[i] !== ' ') {
 				li.className = 'letter';
 			} else {
 				li.className = 'space';
 			}
+			ul.appendChild(li);
 	  }
 	  return arr;
 }
@@ -47,17 +50,15 @@ const phraseArray = getRandomPhraseAsArray(phrases);
 console.log(addPhraseToDisplay(phraseArray));
 addPhraseToDisplay(phraseArray);
 
+const letters = document.getElementsByClassName('letter');
 function checkLetter(letterkeys) {
 	let check = false;
 
-	for (var i = 0; i < letters.length; i += 1) {
-
-	    if (letterkeys.target.textContent === letters[i].textContent.toUpperCase()) {
-
+	for (var i = 0; i < letters.length; i++) {
+	    if (letterkeys.textContent === letters[i].textContent.toUpperCase()) {
 	        letters[i].classList.add('show');
 	        check = true;
 	    } else {
-
 			check = 'null';
 		}
 	}
@@ -66,9 +67,9 @@ function checkLetter(letterkeys) {
 
 qwerty.addEventListener('click', (e) => {
 	console.log(e.target);
-	let letterSelect = checkLetter(e);
-	console.log(letterSelect);
-	for (i = 0; i < letterSelect.length; i+= 1 ) {
+	let letterFound = checkLetter(e);
+	console.log(letterFound);
+	for (i = 0; i < letterFound.length; i+= 1 ) {
 		if (e.target.tagName === 'BUTTON'){
 		 	e.target.classList.add('chosen');
 			e.target.disabled = true;
@@ -77,4 +78,6 @@ qwerty.addEventListener('click', (e) => {
 });
 
 
-//function checkwin(){}
+function checkwin(){
+
+}
