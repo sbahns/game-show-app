@@ -5,7 +5,7 @@ const ul = document.querySelector('ul');
 const letters = document.getElementsByClassName('letter');
 const buttons = document.getElementsByTagName('button');
 const scoreboard = document.getElementById('scoreboard');
-const tries = document.getElementsByClassName('tries');
+
 
 var missed = 0;
 
@@ -71,7 +71,11 @@ qwerty.addEventListener('click', (e) => {
 		e.target.disabled = true;
 		if (letterFound !== true) {
 			missed += 1;
-		} 
+
+	  	let ol = scoreboard.getElementsByTagName('ol')[0];
+			let li = scoreboard.querySelector('li:last-child');
+	  	ol.removeChild(li);
+		}
 	}
 
 	console.log(missed);
