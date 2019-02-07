@@ -3,8 +3,10 @@ const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const ul = document.querySelector('ul');
 const letters = document.getElementsByClassName('letter');
+const buttons = document.getElementsByTagName('button');
 const scoreboard = document.getElementById('scoreboard');
 const tries = document.getElementsByClassName('tries');
+
 var missed = 0;
 
 const phrases = [
@@ -67,16 +69,11 @@ function checkwin(){
 }
 
 qwerty.addEventListener('click', (e) => {
-
-	let letterFound = checkLetter(e.target);
-///this is not setting the buttons to disabled. 
-	for (i = 0; i < e.target.length; i += 1 ) {
-		if (e.target.tagName === 'BUTTON'){
-		 	e.target.classList.add('chosen');
-			e.target.disabled = true;
-		}
-
-	 }
+	if (e.target.tagName === 'BUTTON'){
+		let letterFound = checkLetter(e.target);
+	 	e.target.classList.add('chosen');
+		e.target.disabled = true;
+	}
 
 	console.log(missed);
 });
