@@ -56,10 +56,6 @@ function checkLetter(letterkeys) {
 	        letters[i].classList.add('show');
 	        check = true;
 	    }
-
-	}
-	if (check !== true) {
-		missed += 1;
 	}
 	return check;
 }
@@ -73,6 +69,9 @@ qwerty.addEventListener('click', (e) => {
 		let letterFound = checkLetter(e.target);
 	 	e.target.classList.add('chosen');
 		e.target.disabled = true;
+		if (letterFound !== true) {
+			missed += 1;
+		} 
 	}
 
 	console.log(missed);
