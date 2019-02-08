@@ -10,6 +10,7 @@ const scoreboard = document.getElementById('scoreboard');
 
 var score;
 var missed = 0;
+var resetGame = false;
 
 const phrases = [
 	'We are the Champions',
@@ -19,18 +20,24 @@ const phrases = [
 	'Elementary my dear Watson'
 ]
 
-//Hides the Wheel of Success overlay to display game
-overlay.addEventListener('click', (e) => {
-    if (e.target.textContent === 'Start Game') {
-        overlay.style.display = 'none';
-    } else if (e.target.textContent === 'Start a New Game') {
-        overlay.style.display = 'none';
-	
-    } else if (e.target.textContent === 'Try Again?') {
-        overlay.style.display = 'none';
 
-	}
-});
+
+//Hides the Wheel of Success overlay to display game
+function clearOverlay(display, cssClass){
+	overlay.addEventListener('click', (e) => {
+		overlay.style.display = display;
+		overlay.classList.add(cssClass);
+	})
+}
+
+if (reset.textContent === 'Start Game'){
+	clearOverlay('none', 'start');
+} else if (reset.textContent === 'Start a New Game') {
+	clearOverlay('none', 'win');
+
+} else if (reset.textContent === 'Try Again?') {
+	clearOverlay('none', 'lose');
+};
 
 function getRandomPhraseAsArray(arr){
     //do stuff to any arr that is passed in
@@ -68,33 +75,74 @@ function checkLetter(letterkeys) {
 	return check;
 }
 
+function gamereset(){
+
+	if (resetGame === true) {
+		missed = 0;
+		//reset phrase letters
+		for (let i = 0; i < letters.length; i += 1) {
+		    ul.removeChild(letters[i]);
+		}
+		//reset keyboard buttons
+	 	for (var i = 0; i < buttons.length; i++) {
+	 		buttons[i].className = "";
+	 		buttons[i].disabled = false;
+	 	}
+		//reset hearts
+	 	for (var i = 0; i < 5; i += 1) {
+			let ol = scoreboard.getElementsByTagName('ol')[0];
+			let li = scoreboard.querySelector('li:last-child');
+			ol.addChild(li);
+	 	}
+		//reset phrase
+		const phraseArray = getRandomPhraseAsArray(phrases);
+		addPhraseToDisplay(phraseArray);
+	}
+	console.log(missed);
+}
+
 function checkwin(x, y, z){
+	let check = false;
 	if (x.length === y.length && z <= 5) {
 		reset.innerHTML = 'Start a New Game';
 		overlay.style.display = 'flex';
 		overlay.classList.add('win');
+		resetGame = true;
 	}
+	return check;
+}
+
+function checklose(){
+	let check = false;
+	if (missed > 5) {
+		reset.innerHTML = 'Try Again?';
+		overlay.style.display = 'flex';
+		overlay.classList.add('lose');
+		resetGame = true;
+	}
+	return check;
 }
 
 qwerty.addEventListener('click', (e) => {
 	let letterFound = checkLetter(e.target);
-	if (letterFound && e.target.tagName === 'BUTTON'){
-	  e.target.classList.add('chosen');
-	  e.target.disabled = true;
-  	} else if(!letterFound && e.target.tagName === 'BUTTON'){
-	  	e.target.classList.add('chosen');
-   		e.target.disabled = true;
-		if (missed < 5) {
-			missed += 1;
-			let ol = scoreboard.getElementsByTagName('ol')[0];
-			let li = scoreboard.querySelector('li:last-child');
-	  		ol.removeChild(li);
+	if (e.target.tagName === 'BUTTON'){
+	    e.target.classList.add('chosen');
+	    e.target.disabled = true;
+	 if(letterFound) {
+		checkwin(show, letters, missed);
+	} else if (!letterFound){
+		missed += 1;
+		let ol = scoreboard.getElementsByTagName('ol')[0];
+		let li = scoreboard.querySelector('li:last-child');
+		if (missed <= 5) {
+   			ol.removeChild(li);
 		} else {
-		  reset.innerHTML = 'Try Again?';
-		  overlay.style.display = 'flex';
-		  overlay.classList.add('lose');
-	  }
-	}
-	checkwin(show, letters, missed);
+			checklose();
+		}
+	 }
+  	}
 
 });
+
+
+gamereset();
