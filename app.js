@@ -1,5 +1,6 @@
 const overlay = document.getElementById('overlay');
 const reset = document.querySelector('.btn__reset');
+const title = document.querySelector('.title');
 const qwerty = document.getElementById('qwerty');
 const phrase = document.getElementById('phrase');
 const ul = document.getElementsByTagName('ul')[0];
@@ -79,9 +80,10 @@ function checkLetter(letterkeys) {
 function gamereset(){
 	missed = 0;
 
-	let li = document.querySelectorAll('.letter, .space');
-	for (var i = 0; i < li.length; i += 1) {
-    	ul.removeChild(li[i]);
+	//reset phrase tiles
+	const ulli = document.querySelectorAll('.letter, .space');
+	for (var i = 0; i < ulli.length; i += 1) {
+    	ul.removeChild(ulli[i]);
     }
 	//reset keyboard buttons
  	for (var i = 0; i < buttons.length; i++) {
@@ -89,12 +91,10 @@ function gamereset(){
  		buttons[i].disabled = false;
  	}
 	//reset hearts
-	const olli = document.querySelector('.tries');
-	if (missed === 0) {
- 		for (var i = 0; i < olli.length; i += 1) {
-			olli[i].style.display = "inline-block";
-		}
- 	}
+	const olli = document.querySelectorAll('.tries');
+	for (var i = 0; i < olli.length; i += 1) {
+		olli[i].style.display = "inline-block";
+	}
 
 	//reset phrase
 	const phraseArray = getRandomPhraseAsArray(phrases);
@@ -103,7 +103,8 @@ function gamereset(){
 
 function checkwin(x, y, z){
 	if (x.length === y.length && z <= 5) {
-		reset.innerHTML = 'Start a New Game';
+		title.innerHTML = 'YOU WON!';
+		reset.innerHTML = 'Start a New Game!';
 		overlay.style.display = 'flex';
 		overlay.classList.add('win');
 		resetGame = true;
@@ -119,6 +120,7 @@ function checklose(){
 	}
 
 	if (missed > 5) {
+		title.innerHTML = 'YOU LOSE';
 		reset.innerHTML = 'Try Again?';
 		overlay.style.display = 'flex';
 		overlay.classList.add('lose');
