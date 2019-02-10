@@ -79,7 +79,7 @@ function checkLetter(letterkeys) {
 
 function gamereset(){
 	missed = 0;
-
+	overlay.classList.remove('win', 'lose');
 	//reset phrase tiles
 	const ulli = document.querySelectorAll('.letter, .space');
 	for (var i = 0; i < ulli.length; i += 1) {
