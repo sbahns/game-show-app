@@ -119,7 +119,7 @@ function checklose(){
 		li.style.display = "none";
 	}
 
-	if (missed > 5) {
+	if (missed >= 5) {
 		title.innerHTML = 'YOU LOSE';
 		reset.innerHTML = 'Try Again?';
 		overlay.style.display = 'flex';
